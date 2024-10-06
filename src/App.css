@@ -1,0 +1,32 @@
+/* styles.css or any other CSS file you're using */
+@media (max-width: 768px) {
+    .border-t-2 {
+        margin-top: 5%;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    input {
+        font-size: 1rem;
+    }
+
+    .text-4xl {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .w-[25%] {
+        width: 90%;
+    }
+
+    .text-3xl {
+        font-size: 1.5rem;
+    }
+
+    .text-2xl {
+        font-size: 1.25rem;
+    }
+}
