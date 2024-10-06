@@ -4,20 +4,23 @@ import { useState } from "react";
 const App = () => {
   const [Title, setTitle] = useState("");
   const [Tasks, setTasks] = useState([]);
+  const [Index, setIndex] = useState(-1);
   const SubmitHandler = (e) => {
     e.preventDefault();
     if (Title.length <= 0) {
       return alert("Cannot Create Empty Task");
     }
-
     const task = {
       title: Title,
       completed: false,
       id: nanoid(),
     };
-
     const copyTasks = [...Tasks];
-    copyTasks.push(task);
+    if (Index != -1) {
+      copyTasks[Index] = task;
+    } else {
+      copyTasks.push(task);
+    }
     setTasks(copyTasks);
     setTitle("");
   };
@@ -35,6 +38,11 @@ const App = () => {
         ? (copyTasks.splice(index, 1), setTasks(copyTasks))
         : null
       : (copyTasks.splice(index, 1), setTasks(copyTasks));
+  };
+
+  const EditHandler = (index) => {
+    setTitle(Tasks[index].title);
+    setIndex(index);
   };
   return (
     <div className=" border-t-2 w-screen h-screen bg-zinc-800 flex  items-center flex-col">
@@ -64,7 +72,7 @@ const App = () => {
         </button>
       </form>
       {/*  */}
-      <ul className="list-none w-[25%] ">
+      <ul className="list-none">
         {Tasks.length > 0 ? (
           Tasks.map((task, index) => {
             return (
@@ -90,7 +98,14 @@ const App = () => {
                   </h1>
                 </div>
                 <div className="flex gap-3 text-2xl text-yellow-100">
-                  <i className="ri-file-edit-line"></i>
+                  <i
+                    className={`ri-file-edit-line ${
+                      task.completed
+                        ? "pointer-events-none cursor-not-allowed opacity-20"
+                        : ""
+                    }`}
+                    onClick={() => EditHandler(index)}
+                  ></i>
                   <i
                     className="ri-delete-bin-3-line"
                     onClick={() => {
